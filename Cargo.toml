@@ -35,6 +35,18 @@ web-sys = { version = "0.3", features = [
     "Headers",
     "DomTokenList",
     "CssStyleDeclaration",
+    "HtmlCanvasElement",
+    "WebGlRenderingContext",
+    "WebGlProgram",
+    "WebGlShader",
+    "WebGlBuffer",
+    "WebGlTexture",
+    "WebGlUniformLocation",
+    "TouchEvent",
+    "Touch",
+    "TouchList",
+    "DomRect",
+    "CanvasRenderingContext2d",
 ] }
 js-sys = "0.3"
 wasm-bindgen-futures = "0.4"

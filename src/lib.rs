@@ -8,9 +8,13 @@ pub mod signals;
 pub mod dom;
 pub mod convex;
 
-// The landing page app (compiled into WASM entry point)
+// Apps (only one can have #[wasm_bindgen(start)] at a time)
 mod app {
-    pub mod landing;
+    // pub mod landing;
+    // pub mod fluid;
+    // pub mod particles;
+    pub mod raymarcher;
+    // pub mod scene3d;
 }
 
 // Re-export everything at crate root for `use oxvoid::*;`
