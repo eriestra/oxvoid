@@ -16,6 +16,7 @@ pub mod app {
     pub mod raymarcher;
     pub mod scene3d;
     pub mod tetris;
+    pub mod doom;
 }
 
 // Re-export everything at crate root for `use oxvoid::*;`
@@ -40,6 +41,7 @@ pub fn main() {
         "raymarcher" => app::raymarcher::run(),
         "scene3d" => app::scene3d::run(),
         "tetris" => app::tetris::run(),
+        "doom" => app::doom::run(),
         _ => app::landing::run(),
     }
 }
