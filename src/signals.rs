@@ -114,7 +114,7 @@ impl PartialEq for EffectInner {
 }
 impl Eq for EffectInner {}
 
-/// All live effects, keyed by ID.
+// All live effects, keyed by ID.
 thread_local! {
     static EFFECTS: RefCell<std::collections::HashMap<usize, Rc<EffectInner>>> =
         RefCell::new(std::collections::HashMap::new());

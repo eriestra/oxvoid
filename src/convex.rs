@@ -3,11 +3,10 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{Request, RequestInit, Response, Headers, WebSocket, MessageEvent};
+use web_sys::{Request, RequestInit, Response, Headers, WebSocket, MessageEvent, Event};
 use js_sys::JSON;
 
-use crate::signals::{signal, ReadSignal, WriteSignal};
-use crate::effect;
+use crate::signals::{signal, ReadSignal};
 
 /// Error type for Convex operations.
 #[derive(Debug)]
@@ -28,13 +27,13 @@ async fn post(url: &str, endpoint: &str, path: &str, args: &JsValue) -> Result<J
     let body_str = JSON::stringify(&body)
         .map_err(|_| ConvexError("JSON stringify failed".into()))?;
 
-    let mut opts = RequestInit::new();
-    opts.method("POST");
-    opts.body(Some(&body_str));
+    let opts = RequestInit::new();
+    opts.set_method("POST");
+    opts.set_body(&body_str);
 
     let headers = Headers::new().unwrap();
     headers.set("Content-Type", "application/json").unwrap();
-    opts.headers(&headers);
+    opts.set_headers(&headers);
 
     let full_url = format!("{}/api/{}", url, endpoint);
     let request = Request::new_with_str_and_init(&full_url, &opts)
@@ -95,7 +94,7 @@ pub fn convex_subscribe(url: &str, path: &str, args: &JsValue) -> ReadSignal<Opt
         js_sys::Reflect::set(&msg, &"type".into(), &"subscribe".into()).unwrap();
         js_sys::Reflect::set(&msg, &"path".into(), &path.clone().into()).unwrap();
         js_sys::Reflect::set(&msg, &"args".into(), &args).unwrap();
-        let msg_str = JSON::stringify(&msg).unwrap();
+        let _msg_str = JSON::stringify(&msg).unwrap();
         // ws reference captured via closure context would need Rc — simplified here
         // In practice, send the subscription message
     }) as Box<dyn Fn(Event)>);

@@ -4,7 +4,6 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::{Document, Element, Event, HtmlElement, HtmlInputElement};
 
-use crate::signals::ReadSignal;
 use crate::effect;
 
 /// Get the document.
