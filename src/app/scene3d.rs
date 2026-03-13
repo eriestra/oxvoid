@@ -185,7 +185,7 @@ fn generate_torus(major: f32, minor: f32, rings: usize, sides: usize, r: f32, g:
         for j in 0..sides {
             let a = (i * (sides + 1) + j) as u16;
             let b = a + (sides + 1) as u16;
-            indices.extend_from_slice(&[a, b, a+1, a+1, b, b+1]);
+            indices.extend_from_slice(&[a, a+1, b, a+1, b+1, b]);
         }
     }
     Mesh { positions, normals, colors, indices }
