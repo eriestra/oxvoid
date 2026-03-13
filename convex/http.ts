@@ -6,7 +6,7 @@ const http = httpRouter();
 
 // Serve app by slug: GET /app/:slug
 http.route({
-  path: "/app/{slug}",
+  pathPrefix: "/app/",
   method: "GET",
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
@@ -27,7 +27,7 @@ http.route({
 
 // Serve CSS: GET /css/:name
 http.route({
-  path: "/css/{name}",
+  pathPrefix: "/css/",
   method: "GET",
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
@@ -38,7 +38,7 @@ http.route({
     return new Response(asset.content, {
       headers: {
         "Content-Type": "text/css; charset=utf-8",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "no-cache",
       },
     });
   }),
@@ -46,7 +46,7 @@ http.route({
 
 // Serve JS glue: GET /js/:name
 http.route({
-  path: "/js/{name}",
+  pathPrefix: "/js/",
   method: "GET",
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
@@ -57,7 +57,7 @@ http.route({
     return new Response(asset.content, {
       headers: {
         "Content-Type": "application/javascript; charset=utf-8",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "no-cache",
       },
     });
   }),
@@ -65,7 +65,7 @@ http.route({
 
 // Serve WASM: GET /wasm/:name
 http.route({
-  path: "/wasm/{name}",
+  pathPrefix: "/wasm/",
   method: "GET",
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
@@ -78,7 +78,7 @@ http.route({
     return new Response(binary, {
       headers: {
         "Content-Type": "application/wasm",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "no-cache",
       },
     });
   }),

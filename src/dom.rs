@@ -2,7 +2,7 @@
 
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{Document, Element, Event, HtmlElement, HtmlInputElement};
+use web_sys::{Document, Element, Event, HtmlInputElement};
 
 use crate::effect;
 
@@ -56,11 +56,11 @@ pub fn attr(element: &Element, key: &str, value: &str) {
 pub fn show_when(element: &Element, condition: impl Fn() -> bool + 'static) {
     let el = element.clone();
     effect(move || {
-        let display = if condition() { "" } else { "none" };
-        el.unchecked_ref::<HtmlElement>()
-            .style()
-            .set_property("display", display)
-            .unwrap();
+        if condition() {
+            el.remove_attribute("style").ok();
+        } else {
+            el.set_attribute("style", "display:none").unwrap();
+        }
     });
 }
 

@@ -15,6 +15,7 @@ const SUBTITLE: &str = "Agent-native WASM apps. No framework. ~280 lines of Rust
 
 #[wasm_bindgen(start)]
 pub fn main() {
+    console_error_panic_hook::set_once();
     let doc = document();
     let root = doc.get_element_by_id("app").unwrap();
 
@@ -243,10 +244,7 @@ fn code_example() -> web_sys::Element {
     let bar = el("div", "term-bar");
     for color in ["#ff5f57", "#febc2e", "#28c840"] {
         let dot = el("span", "term-dot");
-        dot.unchecked_ref::<web_sys::HtmlElement>()
-            .style()
-            .set_property("background", color)
-            .unwrap();
+        attr(&dot, "style", &format!("background:{}", color));
         bar.append_child(&dot).unwrap();
     }
     let title = text_el("span", "term-title", "counter.rs");
@@ -379,10 +377,7 @@ fn get_started() -> web_sys::Element {
     let bar = el("div", "term-bar");
     for color in ["#ff5f57", "#febc2e", "#28c840"] {
         let dot = el("span", "term-dot");
-        dot.unchecked_ref::<web_sys::HtmlElement>()
-            .style()
-            .set_property("background", color)
-            .unwrap();
+        attr(&dot, "style", &format!("background:{}", color));
         bar.append_child(&dot).unwrap();
     }
 
