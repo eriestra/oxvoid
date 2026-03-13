@@ -60,13 +60,15 @@ fn navbar(
 
     let links = el("div", "ox-flex ox-gap-1 ox-items-center");
     let link_names = ["Spec", "Skills", "GitHub"];
-    let link_hrefs = ["#spec", "#skills", "https://github.com/eriestra/oxvoid"];
+    let link_hrefs = [
+        "https://github.com/eriestra/oxvoid/blob/main/spec.md",
+        "https://github.com/eriestra/oxvoid/tree/main/skills",
+        "https://github.com/eriestra/oxvoid",
+    ];
     for i in 0..link_names.len() {
         let a = text_el("a", "nav-link", link_names[i]);
         attr(&a, "href", link_hrefs[i]);
-        if link_hrefs[i].starts_with("http") {
-            attr(&a, "target", "_blank");
-        }
+        attr(&a, "target", "_blank");
         links.append_child(&a).unwrap();
     }
 

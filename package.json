@@ -1,0 +1,24 @@
+{
+  "name": "oxvoid",
+  "version": "1.0.0",
+  "description": "> Agent-native WASM apps. No framework. Describe it, it's live.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eriestra/oxvoid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eriestra/oxvoid/issues"
+  },
+  "homepage": "https://github.com/eriestra/oxvoid#readme",
+  "dependencies": {
+    "convex": "^1.33.0"
+  }
+}
