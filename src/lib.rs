@@ -17,6 +17,7 @@ pub mod app {
     pub mod scene3d;
     pub mod tetris;
     pub mod doom;
+    pub mod graphcalc;
 }
 
 // Re-export everything at crate root for `use oxvoid::*;`
@@ -42,6 +43,7 @@ pub fn main() {
         "scene3d" => app::scene3d::run(),
         "tetris" => app::tetris::run(),
         "doom" => app::doom::run(),
+        "graphcalc" => app::graphcalc::run(),
         _ => app::landing::run(),
     }
 }
