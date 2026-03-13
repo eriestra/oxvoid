@@ -25,14 +25,11 @@ pub fn main() {
     // Theme signal
     let (theme, set_theme) = signal("dark".to_string());
 
-    // Set initial dark theme
-    doc.document_element()
-        .unwrap()
-        .set_attribute("data-theme", "dark")
-        .unwrap();
+    // HTML shell already has lang="en" data-theme="dark" — don't overwrite
 
     // Build page
-    let page = el("div", "landing");
+    let page = el("main", "landing");
+    attr(&page, "role", "main");
     append(&page, &[
         &navbar(&doc, theme.clone(), set_theme),
         &hero(),
@@ -160,8 +157,8 @@ fn thesis() -> web_sys::Element {
 
     for (title, desc) in cards {
         let card = el("div", "ox-card ox-p-6");
-        let h = text_el("h3", "ox-h5 ox-mb-2", title);
-        let p = text_el("p", "ox-text-sm ox-text-muted", desc);
+        let h = text_el("h3", "ox-h4 ox-mb-2", title);
+        let p = text_el("p", "ox-text-sm card-desc", desc);
         append(&card, &[&h, &p]);
         grid.append_child(&card).unwrap();
     }
@@ -224,8 +221,8 @@ fn what_you_get() -> web_sys::Element {
 
     for (title, desc) in items {
         let card = el("div", "ox-card ox-card-hoverable ox-p-5");
-        let h = text_el("h4", "ox-h6 ox-mb-2", title);
-        let p = text_el("p", "ox-text-xs ox-text-muted", desc);
+        let h = text_el("h3", "ox-text-base ox-font-semibold ox-mb-2", title);
+        let p = text_el("p", "ox-text-xs card-desc", desc);
         append(&card, &[&h, &p]);
         grid.append_child(&card).unwrap();
     }
@@ -280,7 +277,7 @@ r#"<pre><code><span class="t-k">use</span> <span class="t-t">oxvoid</span>::*;
 
     // Live demo next to it
     let demo = el("div", "demo-box");
-    let demo_title = text_el("p", "ox-text-xs ox-text-muted ox-mb-2", "Live demo:");
+    let demo_title = text_el("p", "ox-text-xs card-desc ox-mb-2", "Live demo:");
 
     let (count, set_count) = signal(0i32);
     let display = text_el("span", "ox-text-4xl ox-font-bold ox-font-mono", "0");
@@ -417,7 +414,7 @@ r#"<pre><code><span class="t-c"># prerequisites</span>
 
 fn footer() -> web_sys::Element {
     let foot = el("footer", "site-footer");
-    let text = text_el("p", "ox-text-sm ox-text-muted", "ox∅ — The agent-native runtime.");
+    let text = text_el("p", "ox-text-sm card-desc", "ox∅ — The agent-native runtime.");
     let link = text_el("a", "ox-text-sm ox-text-primary", "GitHub");
     attr(&link, "href", "https://github.com/eriestra/oxvoid");
     attr(&link, "target", "_blank");
@@ -479,6 +476,10 @@ const LANDING_CSS: &str = r#"
 .nav-link:hover { color: var(--ox-text); background: var(--ox-bg-muted); }
 .theme-toggle { font-size: 1.25rem; }
 
+/* Contrast-safe muted text */
+.card-desc { color: #6b7280; }
+[data-theme="dark"] .card-desc { color: #b0b4be; }
+
 /* Hero */
 .hero {
     text-align: center; padding: 8rem 0 4rem;
@@ -500,9 +501,10 @@ const LANDING_CSS: &str = r#"
     margin: 1rem 0 0.5rem; font-family: var(--ox-font-display);
 }
 .hero-desc {
-    font-size: 1rem; color: var(--ox-text-muted); max-width: 36rem; margin: 0 auto;
+    font-size: 1rem; color: var(--ox-gray-500); max-width: 36rem; margin: 0 auto;
     line-height: 1.7;
 }
+[data-theme="dark"] .hero-desc { color: #b0b4be; }
 
 /* Workflow */
 .wf {
@@ -601,9 +603,10 @@ const LANDING_CSS: &str = r#"
     margin-top: 0.5rem;
 }
 .stat-versus {
-    font-size: 0.75rem; color: var(--ox-text-subtle);
+    font-size: 0.75rem; color: var(--ox-gray-500);
     margin-top: 0.25rem; font-family: var(--ox-font-mono);
 }
+[data-theme="dark"] .stat-versus { color: #9ca0ab; }
 
 /* Footer */
 .site-footer {

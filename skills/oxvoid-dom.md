@@ -118,6 +118,28 @@ keyed_list(&tbody, todos, |t| t.id, |todo| {
 });
 ```
 
+## Pitfalls
+
+### Never use HtmlElement.style() in WASM
+`el()` returns `web_sys::Element`, not `HtmlElement`. Calling `.unchecked_ref::<HtmlElement>().style()` crashes with `unreachable executed` in WASM. Use `attr()` instead:
+```rust
+// WRONG — crashes in WASM
+el.unchecked_ref::<web_sys::HtmlElement>().style().set_property("background", "red").unwrap();
+
+// CORRECT — use attr
+attr(&el, "style", "background:red");
+```
+
+### Always use `<main>` as root element
+Lighthouse requires a main landmark. Wrap your app in `<main>`:
+```rust
+let page = el("main", "my-app");
+attr(&page, "role", "main");
+```
+
+### Heading hierarchy must be sequential
+h1 → h2 → h3. Never skip levels (h1 → h3). Lighthouse flags this for accessibility.
+
 ### log(msg)
 ```rust
 log("app started");

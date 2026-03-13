@@ -142,6 +142,20 @@ on(&submit_btn, "click", move |_| {
 });
 ```
 
+## Pitfalls
+
+### Never hold borrows across effects
+The signal runtime uses `RefCell`. If you read a signal inside an effect that triggers another effect reading the same signal, you get `RefCell already borrowed` panic. The runtime handles this internally — but if you write custom code that `borrow()`s a signal's internals, always drop the borrow before calling any function that might trigger effects.
+
+### Clone WriteSignal before moving into closures
+`WriteSignal` doesn't implement `Copy`. If you need the same setter in multiple closures, clone it before the first `move`:
+```rust
+let set_count_inc = set_count.clone();
+on(&btn, "click", move |_| set_count_inc.update(|n| *n += 1));
+// set_count is still available here for another closure
+on(&reset, "click", move |_| set_count.set(0));
+```
+
 ### Loading state
 ```rust
 let (loading, set_loading) = signal(false);

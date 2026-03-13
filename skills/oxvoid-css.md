@@ -26,6 +26,27 @@ on(&toggle, "click", move |_| {
 });
 ```
 
+## Pitfalls
+
+### Contrast in dark mode
+`ox-text-muted` and `ox-text-subtle` may fail WCAG contrast checks in dark mode. For body text in cards/descriptions, use explicit colors that pass 4.5:1 ratio:
+```css
+.card-desc { color: #6b7280; }
+[data-theme="dark"] .card-desc { color: #b0b4be; }
+```
+
+### Load Google Fonts async
+Render-blocking font `<link>` costs ~500ms. Use the print/onload swap:
+```html
+<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet" media="print" onload="this.media='all'" />
+```
+
+### HTML shell must have lang attribute
+```html
+<html lang="en" data-theme="dark">
+```
+Lighthouse flags missing `lang` as an a11y failure.
+
 ## Fonts
 
 - **DM Sans** — body text
