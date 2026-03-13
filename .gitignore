@@ -1,0 +1,6 @@
+/target
+/dist
+/pkg
+Cargo.lock
+.env.local
+.DS_Store

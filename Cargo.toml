@@ -1,0 +1,46 @@
+[package]
+name = "oxvoid"
+version = "0.1.0"
+edition = "2024"
+description = "Agent-native WASM apps. Signals + CSS + skills."
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = [
+    "console",
+    "Window",
+    "Document",
+    "Element",
+    "HtmlElement",
+    "Node",
+    "NodeList",
+    "Event",
+    "EventTarget",
+    "MouseEvent",
+    "InputEvent",
+    "KeyboardEvent",
+    "HtmlInputElement",
+    "HtmlTextAreaElement",
+    "HtmlSelectElement",
+    "WebSocket",
+    "MessageEvent",
+    "CloseEvent",
+    "Request",
+    "RequestInit",
+    "Response",
+    "Headers",
+    "DomTokenList",
+    "CssStyleDeclaration",
+] }
+js-sys = "0.3"
+wasm-bindgen-futures = "0.4"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
