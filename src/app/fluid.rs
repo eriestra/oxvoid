@@ -301,8 +301,8 @@ fn render(gl: &GL, tex: &web_sys::WebGlTexture, pixels: &[u8]) {
 
 // ── Entry Point ───────────────────────────────────────────────────
 
-#[wasm_bindgen(start)]
-pub fn main() {
+
+pub fn run() {
     console_error_panic_hook::set_once();
 
     let doc = document();

@@ -23,21 +23,22 @@ async function mutate(path, args) {
   return res.json();
 }
 
-// Upload WASM (base64)
+// Upload WASM (base64) — per-slug to avoid collisions
 console.log("  upload wasm...");
 const wasmB64 = readFileSync("pkg/oxvoid_bg.wasm").toString("base64");
 await mutate("assets:set", {
-  name: "wasm/oxvoid_bg.wasm",
+  name: `wasm/${slug}_bg.wasm`,
   content: wasmB64,
   contentType: "application/wasm",
   secret,
 });
 
-// Upload JS glue
+// Upload JS glue — patch it to reference the slug-specific WASM
 console.log("  upload js...");
-const jsContent = readFileSync("pkg/oxvoid.js", "utf-8");
+let jsContent = readFileSync("pkg/oxvoid.js", "utf-8");
+jsContent = jsContent.replaceAll("oxvoid_bg.wasm", `${slug}_bg.wasm`);
 await mutate("assets:set", {
-  name: "js/oxvoid.js",
+  name: `js/${slug}.js`,
   content: jsContent,
   contentType: "application/javascript",
   secret,
@@ -67,11 +68,11 @@ const html = `<!DOCTYPE html>
     <link rel="stylesheet" href="/css/ox" />
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app" data-app="${slug}"></div>
     <script type="module">
         const v = Date.now();
-        const { default: init } = await import('/js/oxvoid.js?v=' + v);
-        await init('/wasm/oxvoid_bg.wasm?v=' + v);
+        const { default: init } = await import('/js/${slug}.js?v=' + v);
+        await init('/wasm/${slug}_bg.wasm?v=' + v);
     </script>
 </body>
 </html>`;

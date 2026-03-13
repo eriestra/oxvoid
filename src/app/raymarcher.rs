@@ -133,8 +133,8 @@ void main() {
     gl_FragColor = vec4(col, 1.0);
 }";
 
-#[wasm_bindgen(start)]
-pub fn main() {
+
+pub fn run() {
     console_error_panic_hook::set_once();
 
     let doc = document();

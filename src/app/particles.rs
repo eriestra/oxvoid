@@ -160,8 +160,8 @@ const PALETTE: [(f64, f64, f64); NUM_COLORS] = [
 
 // ── Entry Point ───────────────────────────────────────────────────
 
-#[wasm_bindgen(start)]
-pub fn main() {
+
+pub fn run() {
     console_error_panic_hook::set_once();
 
     let doc = document();

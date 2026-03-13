@@ -13,8 +13,8 @@ const SUBTITLE: &str = "Agent-native WASM apps. No framework. ~280 lines of Rust
 
 // ── Entry Point ───────────────────────────────────────────────────
 
-#[wasm_bindgen(start)]
-pub fn main() {
+
+pub fn run() {
     console_error_panic_hook::set_once();
     let doc = document();
     let root = doc.get_element_by_id("app").unwrap();
@@ -252,7 +252,7 @@ fn code_example() -> web_sys::Element {
 r#"<pre><code><span class="t-k">use</span> <span class="t-t">oxvoid</span>::*;
 <span class="t-k">use</span> <span class="t-t">wasm_bindgen</span>::prelude::*;
 
-<span class="t-a">#[wasm_bindgen(start)]</span>
+<span class="t-a"></span>
 <span class="t-k">pub fn</span> <span class="t-f">main</span>() {
     <span class="t-k">let</span> root = document().get_element_by_id(<span class="t-s">"app"</span>).unwrap();
 

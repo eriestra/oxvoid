@@ -260,8 +260,8 @@ fn compile(gl: &GL, t: u32, src: &str) -> web_sys::WebGlShader {
 
 // ── Entry Point ───────────────────────────────────────────────────
 
-#[wasm_bindgen(start)]
-pub fn main() {
+
+pub fn run() {
     console_error_panic_hook::set_once();
 
     let doc = document();
